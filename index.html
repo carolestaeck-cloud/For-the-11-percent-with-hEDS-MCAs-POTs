@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 11% hEDS · MCAS · POTS Resource Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --forest:    #1a3a2a;
+    --deep:      #0f2419;
+    --moss:      #3b6e4e;
+    --sage:      #6fa882;
+    --mist:      #a8c9b5;
+    --cream:     #f5f0e8;
+    --parchment: #ede5d4;
+    --gold:      #c8a96e;
+    --gold-lt:   #e0c898;
+    --text:      #1a2e22;
+    --text-lt:   #4a6856;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(59,110,78,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 70%, rgba(111,168,130,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 10%, rgba(200,169,110,0.10) 0%, transparent 50%);
+  }
+
+  /* Leaf SVG decorations */
+  .leaf-decor {
+    position: absolute;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .leaf-decor.tl { top: -60px; left: -40px; width: 380px; transform: rotate(-30deg); }
+  .leaf-decor.br { bottom: -80px; right: -60px; width: 420px; transform: rotate(150deg); }
+  .leaf-decor.tr { top: 40px; right: 60px; width: 180px; transform: rotate(60deg); opacity: 0.05; }
+
+  .hero-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(200,169,110,0.4);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    margin-bottom: 2.2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    color: var(--cream);
+    text-align: center;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--mist);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    color: var(--mist);
+    text-align: center;
+    margin-top: 1.2rem;
+    max-width: 620px;
+    line-height: 1.6;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero-conditions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2.8rem;
+    animation: fadeUp 1s 0.35s ease both;
+  }
+
+  .condition-pill {
+    background: rgba(111,168,130,0.15);
+    border: 1px solid rgba(111,168,130,0.3);
+    color: var(--mist);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .condition-pill:hover {
+    background: rgba(111,168,130,0.28);
+    border-color: var(--sage);
+    color: var(--cream);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(168,201,181,0.5);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(168,201,181,0.4), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,36,25,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(111,168,130,0.15);
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    color: var(--mist);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2rem;
+    transition: all 0.25s;
+  }
+  nav a:hover {
+    background: rgba(111,168,130,0.2);
+    color: var(--cream);
+  }
+  nav .dot { color: rgba(111,168,130,0.3); font-size: 0.6rem; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(59,110,78,0.2);
+  }
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(59,110,78,0.25);
+  }
+  .section-title-group {}
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.3rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.1;
+  }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid rgba(59,110,78,0.12);
+    border-radius: 1.2rem;
+    padding: 1.8rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--moss), var(--sage));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(26,58,42,0.12), 0 4px 12px rgba(26,58,42,0.06);
+    border-color: rgba(59,110,78,0.25);
+  }
+  .card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, rgba(59,110,78,0.1), rgba(111,168,130,0.15));
+    border-radius: 0.75rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .card-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+    background: rgba(111,168,130,0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    width: fit-content;
+  }
+  .card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--forest);
+    line-height: 1.3;
+  }
+  .card p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-lt);
+    flex: 1;
+  }
+  .card-arrow {
+    font-size: 0.8rem;
+    color: var(--sage);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .card:hover .card-arrow { gap: 0.6rem; }
+
+  /* ── FEATURED / WIDE CARD ── */
+  .card.featured {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--moss) 100%);
+    border-color: transparent;
+    gap: 2rem;
+    padding: 2.2rem 2.5rem;
+  }
+  .card.featured .card-icon {
+    background: rgba(255,255,255,0.12);
+    width: 56px; height: 56px;
+    font-size: 1.8rem;
+  }
+  .card.featured .card-tag { color: var(--gold-lt); background: rgba(200,169,110,0.15); }
+  .card.featured h3 { color: var(--cream); font-size: 1.5rem; }
+  .card.featured p { color: var(--mist); }
+  .card.featured .card-arrow { color: var(--gold-lt); }
+  .card.featured::before { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); }
+
+  @media (max-width: 640px) {
+    .card.featured { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ── CONDITION TABS ── */
+  .tabs { margin-bottom: 3rem; }
+  .tab-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .tab-btn {
+    background: none;
+    border: 1px solid rgba(59,110,78,0.25);
+    color: var(--text-lt);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.55rem 1.3rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--cream);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+
+  /* ── SUPPORT / COMMUNITY SECTION ── */
+  #community { background: var(--parchment); }
+
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .community-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(59,110,78,0.1);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.25s;
+  }
+  .community-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(26,58,42,0.1);
+    border-color: var(--sage);
+  }
+  .community-card .platform-icon {
+    width: 44px; height: 44px; border-radius: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .community-card h4 {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--forest);
+    margin-bottom: 0.3rem;
+  }
+  .community-card p {
+    font-size: 0.78rem;
+    color: var(--text-lt);
+    line-height: 1.5;
+  }
+
+  /* ── SOCIAL SECTION ── */
+  #social { background: var(--forest); }
+  #social .section-title { color: var(--mist); }
+  #social .section-label { color: var(--gold); }
+  #social .section-number { color: rgba(111,168,130,0.2); }
+  #social .section-header { border-color: rgba(111,168,130,0.15); }
+
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .social-card {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .social-card::after {
+    content: '↗';
+    position: absolute;
+    top: 1rem; right: 1rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+    transform: translate(-4px, 4px);
+  }
+  .social-card:hover::after { opacity: 0.7; transform: translate(0,0); }
+
+  .social-card.instagram { background: rgba(168,201,181,0.08); border: 1px solid rgba(168,201,181,0.15); }
+  .social-card.youtube   { background: rgba(200,169,110,0.08); border: 1px solid rgba(200,169,110,0.15); }
+  .social-card.tiktok    { background: rgba(111,168,130,0.08); border: 1px solid rgba(111,168,130,0.15); }
+  .social-card.reddit    { background: rgba(168,201,181,0.06); border: 1px solid rgba(168,201,181,0.12); }
+  .social-card.podcast   { background: rgba(200,169,110,0.06); border: 1px solid rgba(200,169,110,0.12); }
+  .social-card.facebook  { background: rgba(111,168,130,0.06); border: 1px solid rgba(111,168,130,0.12); }
+
+  .social-card:hover { transform: translateY(-3px); filter: brightness(1.15); }
+
+  .social-icon { font-size: 1.8rem; }
+  .social-platform { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--gold); }
+  .social-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--cream); line-height: 1.2; }
+  .social-desc { font-size: 0.78rem; color: var(--mist); line-height: 1.5; }
+
+  /* ── STAT BANNER ── */
+  .stat-banner {
+    background: linear-gradient(135deg, var(--moss) 0%, var(--forest) 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .stat-banner-inner {
+    max-width: 900px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--mist);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    max-width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: var(--parchment);
+    border-left: 3px solid var(--sage);
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin: 3rem 0 0;
+    font-size: 0.8rem;
+    color: var(--text-lt);
+    line-height: 1.6;
+    max-width: 700px;
+  }
+  .disclaimer strong { color: var(--forest); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep);
+    color: var(--mist);
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+  footer .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--cream);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  footer p { color: rgba(168,201,181,0.5); max-width: 500px; margin: 0 auto; }
+  footer a { color: var(--sage); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 0.9; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── CHIP ROW ── */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .chip {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.85rem;
+    border-radius: 2rem;
+    background: rgba(59,110,78,0.1);
+    color: var(--moss);
+    border: 1px solid rgba(59,110,78,0.2);
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Leaf SVG decorations -->
+  <svg class="leaf-decor tl" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 480 C200 480 20 380 20 200 C20 80 120 20 200 20 C280 20 380 80 380 200 C380 380 200 480 200 480Z" fill="#6fa882"/>
+    <path d="M200 480 L200 20" stroke="#a8c9b5" stroke-width="2" opacity="0.5"/>
+    <path d="M200 120 L120 80" stroke="#a8c9b5" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 200 L80 160" stroke="#a8c9b5" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 280 L120 260" stroke="#a8c9b5" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 120 L280 80" stroke="#a8c9b5" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 200 L320 160" stroke="#a8c9b5" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 280 L280 260" stroke="#a8c9b5" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+
+  <svg class="leaf-decor br" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 480 C200 480 20 380 20 200 C20 80 120 20 200 20 C280 20 380 80 380 200 C380 380 200 480 200 480Z" fill="#3b6e4e"/>
+    <path d="M200 480 L200 20" stroke="#6fa882" stroke-width="2" opacity="0.5"/>
+    <path d="M200 120 L120 80" stroke="#6fa882" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 200 L80 160" stroke="#6fa882" stroke-width="1.5" opacity="0.4"/>
+    <path d="M200 280 L120 260" stroke="#6fa882" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+
+  <div class="hero-badge">Women's Health · Connective Tissue · Autonomic Nervous System</div>
+
+  <h1>The <em>11%</em></h1>
+  <p class="hero-sub">A resource hub for women navigating hEDS, MCAS, and POTS, connecting science, community, and care.</p>
+
+  <div class="hero-conditions">
+    <span class="condition-pill">Hypermobile EDS</span>
+    <span class="condition-pill">Mast Cell Activation Syndrome</span>
+    <span class="condition-pill">Postural Orthostatic Tachycardia</span>
+    <span class="condition-pill">Dysautonomia</span>
+    <span class="condition-pill">Connective Tissue Disorders</span>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Explore</span>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#research">Research</a>
+  <span class="dot">●</span>
+  <a href="#organisations">Organisations</a>
+  <span class="dot">●</span>
+  <a href="#condition-guides">Condition Guides</a>
+  <span class="dot">●</span>
+  <a href="#community">Community</a>
+  <span class="dot">●</span>
+  <a href="#social">Social</a>
+  <span class="dot">●</span>
+  <a href="#crisis">Crisis Support</a>
+</nav>
+
+<!-- ── STATS ── -->
+<div class="stat-banner">
+  <div class="stat-banner-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num"><span>~11</span>%</div>
+      <div class="stat-label">of women affected by hypermobile connective tissue disorders</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span>3</span>–<span>5</span>×</div>
+      <div class="stat-label">more common in women than men for POTS and MCAS</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span>6</span>yrs</div>
+      <div class="stat-label">average delay to an hEDS diagnosis</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span>70</span>%</div>
+      <div class="stat-label">of hEDS patients also meet criteria for POTS or dysautonomia</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESEARCH ── -->
+<section id="research">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-number">01</div>
+      <div class="section-title-group">
+        <div class="section-label">Peer-Reviewed Science</div>
+        <h2 class="section-title">Research & Literature</h2>
+      </div>
+    </div>
+
+    <div class="card-grid reveal">
+
+      <a class="card featured" href="https://pubmed.ncbi.nlm.nih.gov/?term=hypermobile+ehlers-danlos+syndrome+women" target="_blank" rel="noopener">
+        <div class="card-icon">🧬</div>
+        <div>
+          <div class="card-tag">PubMed Database</div>
+          <h3>hEDS Research on PubMed</h3>
+          <p>Thousands of peer-reviewed papers on hypermobile Ehlers-Danlos Syndrome, including genetics, co-morbidities, and treatment approaches. The most comprehensive medical literature database.</p>
+          <div class="card-arrow">Search PubMed →</div>
+        </div>
+      </a>
+
+      <a class="card" href="https://www.ehlers-danlos.com/research/" target="_blank" rel="noopener">
+        <div class="card-icon">🔬</div>
+        <div class="card-tag">EDS Society</div>
+        <h3>EDS Research Hub</h3>
+        <p>Curated research by The Ehlers-Danlos Society including clinical trials, registries, and funded studies on all EDS subtypes.</p>
+        <div class="card-arrow">View Research →</div>
+      </a>
+
+      <a class="card" href="https://www.dysautonomiainternational.org/page/Research" target="_blank" rel="noopener">
+        <div class="card-icon">💓</div>
+        <div class="card-tag">POTS Research</div>
+        <h3>Dysautonomia International Research</h3>
+        <p>Funded research on POTS, dysautonomia, and autonomic dysfunction, including the landmark impact of orthostatic intolerance on quality of life.</p>
+        <div class="card-arrow">Explore →</div>
+      </a>
+
+      <a class="card" href="https://tmsforacure.org/research/" target="_blank" rel="noopener">
+        <div class="card-icon">🧪</div>
+        <div class="card-tag">MCAS Research</div>
+        <h3>TMS for a Cure MCAS Studies</h3>
+        <p>The Mastocytosis Society's research repository, covering diagnostic criteria, biomarkers, and emerging treatments for mast cell disorders.</p>
+        <div class="card-arrow">Read Studies →</div>
+      </a>
+
+      <a class="card" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7045437/" target="_blank" rel="noopener">
+        <div class="card-icon">📄</div>
+        <div class="card-tag">Key Paper</div>
+        <h3>The Triad: hEDS, MCAS & POTS</h3>
+        <p>Landmark paper on the overlap between hEDS, MCAS, and POTS explaining the likely shared pathophysiology and why these conditions cluster together.</p>
+        <div class="card-arrow">Read Paper →</div>
+      </a>
+
+      <a class="card" href="https://clinicaltrials.gov/search?cond=Ehlers-Danlos+Syndrome" target="_blank" rel="noopener">
+        <div class="card-icon">🏥</div>
+        <div class="card-tag">Clinical Trials</div>
+        <h3>Active Clinical Trials</h3>
+        <p>Browse open and recruiting clinical trials for EDS and related conditions via the ClinicalTrials.gov registry including trials seeking participants.</p>
+        <div class="card-arrow">Find Trials →</div>
+      </a>
+
+      <a class="card" href="https://pubmed.ncbi.nlm.nih.gov/?term=POTS+women+postural+orthostatic+tachycardia" target="_blank" rel="noopener">
+        <div class="card-icon">📊</div>
+        <div class="card-tag">POTS Literature</div>
+        <h3>POTS in Women PubMed</h3>
+        <p>A curated search of the latest POTS research with a focus on female patients, hormonal links, and emerging pharmacological and non-pharmacological treatments.</p>
+        <div class="card-arrow">Search →</div>
+      </a>
+
+      <a class="card" href="https://www.nature.com/search?q=mast+cell+activation+syndrome" target="_blank" rel="noopener">
+        <div class="card-icon">🔭</div>
+        <div class="card-tag">Nature</div>
+        <h3>MCAS Research Nature Journals</h3>
+        <p>High-impact MCAS research published across Nature's portfolio of medical and biological journals.</p>
+        <div class="card-arrow">Browse →</div>
+      </a>
+
+    </div>
+
+    <div class="disclaimer reveal">
+      <strong>Note:</strong> This page is a resource hub for informational purposes only. It does not constitute medical advice. Always consult a qualified healthcare provider for diagnosis and treatment decisions.
+    </div>
+  </div>
+</section>
+
+<!-- ── ORGANISATIONS ── -->
+<section id="organisations" style="background: var(--parchment);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-number">02</div>
+      <div class="section-title-group">
+        <div class="section-label">Non-Profits & Advocacy</div>
+        <h2 class="section-title">Leading Organisations</h2>
+      </div>
+    </div>
+    <div class="card-grid reveal">
+
+      <a class="card" href="https://www.ehlers-danlos.com/" target="_blank" rel="noopener">
+        <div class="card-icon">🌿</div>
+        <div class="card-tag">hEDS · Global</div>
+        <h3>The Ehlers-Danlos Society</h3>
+        <p>The world's leading EDS charity providing research funding, clinician training, patient education, and a global community for all EDS types including hEDS.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+      <a class="card" href="https://www.dysautonomiainternational.org/" target="_blank" rel="noopener">
+        <div class="card-icon">💙</div>
+        <div class="card-tag">POTS · Dysautonomia</div>
+        <h3>Dysautonomia International</h3>
+        <p>The primary global advocacy and research organisation for POTS and all forms of dysautonomia. Excellent physician directory and patient education.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+      <a class="card" href="https://tmsforacure.org/" target="_blank" rel="noopener">
+        <div class="card-icon">🟡</div>
+        <div class="card-tag">MCAS · Mastocytosis</div>
+        <h3>The Mastocytosis Society</h3>
+        <p>A patient-led non-profit supporting those with mast cell disorders including MCAS. Offers a specialist physician referral list and annual conference.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+      <a class="card" href="https://www.standinguptopots.org/" target="_blank" rel="noopener">
+        <div class="card-icon">🧡</div>
+        <div class="card-tag">POTS · US-focused</div>
+        <h3>Standing Up to POTS</h3>
+        <p>A patient-founded organisation dedicated specifically to POTS providing education, support groups, a symptom survey database, and advocacy resources.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+      <a class="card" href="https://www.ednf.org/" target="_blank" rel="noopener">
+        <div class="card-icon">🌱</div>
+        <div class="card-tag">EDS Foundation</div>
+        <h3>EDS National Foundation</h3>
+        <p>Supports EDS patients with resources, a patient registry, and a strong network of specialist physicians across North America.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+      <a class="card" href="https://www.mcasalliance.org/" target="_blank" rel="noopener">
+        <div class="card-icon">🟤</div>
+        <div class="card-tag">MCAS Alliance</div>
+        <h3>MCAS Alliance</h3>
+        <p>A dedicated non-profit for mast cell activation syndrome patients resources include a physician finder, educational events, and a patient support network.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONDITION GUIDES ── -->
+<section id="condition-guides">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-number">03</div>
+      <div class="section-title-group">
+        <div class="section-label">Patient Education</div>
+        <h2 class="section-title">Condition Guides & Tools</h2>
+      </div>
+    </div>
+
+    <div class="tabs reveal">
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('heds', this)">hEDS</button>
+        <button class="tab-btn" onclick="switchTab('mcas', this)">MCAS</button>
+        <button class="tab-btn" onclick="switchTab('pots', this)">POTS</button>
+        <button class="tab-btn" onclick="switchTab('overlap', this)">Overlap & Co-occurring</button>
+      </div>
+
+      <div id="tab-heds" class="tab-panel active">
+        <a class="card" href="https://www.ehlers-danlos.com/heds-diagnostic-checklist/" target="_blank" rel="noopener">
+          <div class="card-icon">✅</div>
+          <div class="card-tag">Diagnostic Criteria</div>
+          <h3>hEDS Diagnostic Checklist</h3>
+          <p>The 2017 International Classification criteria for hEDS the checklist used by clinicians worldwide.</p>
+          <div class="card-arrow">View Checklist →</div>
+        </a>
+        <a class="card" href="https://hypermobility.org/" target="_blank" rel="noopener">
+          <div class="card-icon">🦴</div>
+          <div class="card-tag">Hypermobility UK</div>
+          <h3>Hypermobility Syndromes Association</h3>
+          <p>UK-based organisation covering hEDS and HSD with resources on management, physiotherapy, and a clinician finder.</p>
+          <div class="card-arrow">Visit →</div>
+        </a>
+        <a class="card" href="https://www.ehlers-danlos.com/eds-types/" target="_blank" rel="noopener">
+          <div class="card-icon">📘</div>
+          <div class="card-tag">EDS Types Guide</div>
+          <h3>Understanding EDS Subtypes</h3>
+          <p>Comprehensive breakdown of all 13 EDS subtypes critical for navigating diagnosis and genetics conversations.</p>
+          <div class="card-arrow">Learn More →</div>
+        </a>
+      </div>
+
+      <div id="tab-mcas" class="tab-panel">
+        <a class="card" href="https://tmsforacure.org/overview/mcas-frequently-asked-questions/" target="_blank" rel="noopener">
+          <div class="card-icon">❓</div>
+          <div class="card-tag">MCAS FAQ</div>
+          <h3>MCAS Frequently Asked Questions</h3>
+          <p>Comprehensive patient FAQ covering symptoms, triggers, diagnosis, and treatment produced by The Mastocytosis Society.</p>
+          <div class="card-arrow">Read →</div>
+        </a>
+        <a class="card" href="https://www.mastocytosis.ca/en/mcas" target="_blank" rel="noopener">
+          <div class="card-icon">🟡</div>
+          <div class="card-tag">Mastocytosis Canada</div>
+          <h3>MCAS Overview</h3>
+          <p>Clear, plain-language explanation of mast cell activation syndrome causes, symptoms, and the latest diagnostic thinking.</p>
+          <div class="card-arrow">Visit →</div>
+        </a>
+        <a class="card" href="https://www.mcasalliance.org/patients.html" target="_blank" rel="noopener">
+          <div class="card-icon">🗂️</div>
+          <div class="card-tag">Patient Resources</div>
+          <h3>MCAS Patient Resource Library</h3>
+          <p>Downloadable handouts, trigger lists, dietary guides, and physician letters from MCAS Alliance.</p>
+          <div class="card-arrow">Browse →</div>
+        </a>
+      </div>
+
+      <div id="tab-pots" class="tab-panel">
+        <a class="card" href="https://www.dysautonomiainternational.org/page/POTS" target="_blank" rel="noopener">
+          <div class="card-icon">❤️‍🩹</div>
+          <div class="card-tag">POTS Guide</div>
+          <h3>What is POTS?</h3>
+          <p>Full overview from Dysautonomia International covering diagnosis, the tilt table test, treatment tiers, and lifestyle modifications.</p>
+          <div class="card-arrow">Read →</div>
+        </a>
+        <a class="card" href="https://www.standinguptopots.org/diagnosis" target="_blank" rel="noopener">
+          <div class="card-icon">📋</div>
+          <div class="card-tag">Diagnosis</div>
+          <h3>Getting a POTS Diagnosis</h3>
+          <p>Step-by-step guide to obtaining a POTS diagnosis, including which specialists to see and what testing to request.</p>
+          <div class="card-arrow">Visit →</div>
+        </a>
+        <a class="card" href="https://www.vanderbilthealth.com/condition/pots" target="_blank" rel="noopener">
+          <div class="card-icon">🏛️</div>
+          <div class="card-tag">Vanderbilt</div>
+          <h3>Vanderbilt Autonomic Dysfunction Center</h3>
+          <p>Resources from one of the world's leading POTS research and treatment centres, including the influential Levine exercise protocol.</p>
+          <div class="card-arrow">Visit →</div>
+        </a>
+      </div>
+
+      <div id="tab-overlap" class="tab-panel">
+        <a class="card" href="https://www.ehlers-danlos.com/comorbidities/" target="_blank" rel="noopener">
+          <div class="card-icon">🔗</div>
+          <div class="card-tag">Co-morbidities</div>
+          <h3>hEDS Co-occurring Conditions</h3>
+          <p>EDS Society's guide to common co-morbidities including POTS, MCAS, fibromyalgia, and small fibre neuropathy.</p>
+          <div class="card-arrow">Read →</div>
+        </a>
+        <a class="card" href="https://pubmed.ncbi.nlm.nih.gov/32345594/" target="_blank" rel="noopener">
+          <div class="card-icon">🧠</div>
+          <div class="card-tag">Research Paper</div>
+          <h3>Mast Cells, POTS & Connective Tissue</h3>
+          <p>PubMed study on how mast cell mediators contribute to both autonomic dysfunction and connective tissue fragility explaining the hEDS–MCAS–POTS triad.</p>
+          <div class="card-arrow">Read Paper →</div>
+        </a>
+        <a class="card" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6566983/" target="_blank" rel="noopener">
+          <div class="card-icon">📊</div>
+          <div class="card-tag">Prevalence Study</div>
+          <h3>hEDS Prevalence in Women</h3>
+          <p>Research examining the prevalence and sex-linked presentation of hypermobility spectrum disorders, including hormonal modulation of symptoms.</p>
+          <div class="card-arrow">Read →</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMUNITY ── -->
+<section id="community">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-number">04</div>
+      <div class="section-title-group">
+        <div class="section-label">Peer Support & Connection</div>
+        <h2 class="section-title">Community & Support</h2>
+      </div>
+    </div>
+
+    <div class="chip-row reveal">
+      <span class="chip">Online Forums</span>
+      <span class="chip">In-Person Groups</span>
+      <span class="chip">Peer Support</span>
+      <span class="chip">Advocacy Networks</span>
+    </div>
+
+    <div class="community-grid reveal">
+
+      <a class="community-card" href="https://www.reddit.com/r/ehlersdanlos/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(255,69,0,0.1);">🟠</div>
+        <div>
+          <h4>r/EhlersDanlos</h4>
+          <p>Active Reddit community with 60k+ members sharing experiences, diagnosis journeys, and management tips.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://www.reddit.com/r/POTS/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(255,69,0,0.1);">🟠</div>
+        <div>
+          <h4>r/POTS</h4>
+          <p>Supportive community for those with POTS and dysautonomia covering treatment, daily life, and physician recommendations.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://www.reddit.com/r/MCAS/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(255,69,0,0.1);">🟠</div>
+        <div>
+          <h4>r/MCAS</h4>
+          <p>Community forum for mast cell activation syndrome discussing triggers, antihistamine protocols, and finding specialists.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://www.ehlers-danlos.com/support-groups/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(59,110,78,0.1);">🌿</div>
+        <div>
+          <h4>EDS Society Support Groups</h4>
+          <p>Official directory of in-person and online EDS support groups worldwide find a group in your country or region.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://www.dysautonomiainternational.org/page/SupportGroups" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(59,110,78,0.1);">💙</div>
+        <div>
+          <h4>Dysautonomia Support Groups</h4>
+          <p>Official support group directory from Dysautonomia International searchable by country and condition type.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://www.butyoudontlooksick.com/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(200,169,110,0.1);">💛</div>
+        <div>
+          <h4>But You Don't Look Sick</h4>
+          <p>Home of the Spoon Theory a community for people with invisible illnesses that includes forums and advocacy resources.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://www.chronicillnessalliance.org.au/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(59,110,78,0.1);">🌏</div>
+        <div>
+          <h4>Chronic Illness Alliance</h4>
+          <p>Australia-based alliance supporting people with chronic illnesses including advocacy, peer support, and policy work.</p>
+        </div>
+      </a>
+
+      <a class="community-card" href="https://tmsforacure.org/support/" target="_blank" rel="noopener">
+        <div class="platform-icon" style="background: rgba(200,169,110,0.1);">🟤</div>
+        <div>
+          <h4>TMS Patient Community</h4>
+          <p>The Mastocytosis Society's community network connecting MCAS patients with peer mentors and specialist referrals.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SOCIAL ── -->
+<section id="social">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-number">05</div>
+      <div class="section-title-group">
+        <div class="section-label">Digital Spaces</div>
+        <h2 class="section-title">Social Channels & Media</h2>
+      </div>
+    </div>
+
+    <div class="social-grid reveal">
+
+      <a class="social-card instagram" href="https://www.instagram.com/explore/tags/hEDS/" target="_blank" rel="noopener">
+        <div class="social-icon">📸</div>
+        <div class="social-platform">Instagram</div>
+        <div class="social-name">#hEDS Community</div>
+        <div class="social-desc">Patient stories, awareness content, and advocacy posts from the hEDS community.</div>
+      </a>
+
+      <a class="social-card instagram" href="https://www.instagram.com/theehlersdanlossociety/" target="_blank" rel="noopener">
+        <div class="social-icon">📸</div>
+        <div class="social-platform">Instagram</div>
+        <div class="social-name">@theehlersdanlossociety</div>
+        <div class="social-desc">Official EDS Society Instagram research updates, patient spotlights, and awareness campaigns.</div>
+      </a>
+
+      <a class="social-card youtube" href="https://www.youtube.com/@DysautonomiaInternational" target="_blank" rel="noopener">
+        <div class="social-icon">▶️</div>
+        <div class="social-platform">YouTube</div>
+        <div class="social-name">Dysautonomia International</div>
+        <div class="social-desc">Conference recordings, patient stories, and expert interviews on POTS and dysautonomia.</div>
+      </a>
+
+      <a class="social-card youtube" href="https://www.youtube.com/results?search_query=hEDS+POTS+MCAS" target="_blank" rel="noopener">
+        <div class="social-icon">▶️</div>
+        <div class="social-platform">YouTube</div>
+        <div class="social-name">hEDS · POTS · MCAS Videos</div>
+        <div class="social-desc">Hundreds of patient-created and clinician-made educational videos about the triad conditions.</div>
+      </a>
+
+      <a class="social-card tiktok" href="https://www.tiktok.com/search?q=hEDS" target="_blank" rel="noopener">
+        <div class="social-icon">🎵</div>
+        <div class="social-platform">TikTok</div>
+        <div class="social-name">#hEDS on TikTok</div>
+        <div class="social-desc">Growing community of patients sharing day-in-the-life content, symptom explainers, and diagnosis journeys.</div>
+      </a>
+
+      <a class="social-card tiktok" href="https://www.tiktok.com/search?q=POTS+syndrome" target="_blank" rel="noopener">
+        <div class="social-icon">🎵</div>
+        <div class="social-platform">TikTok</div>
+        <div class="social-name">#POTSsyndrome</div>
+        <div class="social-desc">POTS awareness content with a focus on young women tips, humour, advocacy, and community connection.</div>
+      </a>
+
+      <a class="social-card facebook" href="https://www.facebook.com/groups/EDSsupport" target="_blank" rel="noopener">
+        <div class="social-icon">👥</div>
+        <div class="social-platform">Facebook Group</div>
+        <div class="social-name">EDS Support Group</div>
+        <div class="social-desc">One of the largest Facebook communities for EDS patients, with active Q&A, doctor recommendations, and daily support.</div>
+      </a>
+
+      <a class="social-card podcast" href="https://www.ehlers-danlos.com/eds-podcast/" target="_blank" rel="noopener">
+        <div class="social-icon">🎙️</div>
+        <div class="social-platform">Podcast</div>
+        <div class="social-name">EDS Society Podcast</div>
+        <div class="social-desc">In-depth conversations with clinicians, researchers, and patients covering life with hEDS and the latest science.</div>
+      </a>
+
+      <a class="social-card podcast" href="https://www.thepotsproject.com/" target="_blank" rel="noopener">
+        <div class="social-icon">🎙️</div>
+        <div class="social-platform">Podcast & Blog</div>
+        <div class="social-name">The POTS Project</div>
+        <div class="social-desc">Patient-led podcast covering the lived experience of POTS interviews, coping strategies, and community features.</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CRISIS / URGENT ── -->
+<section id="crisis" style="background: var(--parchment);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-number">06</div>
+      <div class="section-title-group">
+        <div class="section-label">When You Need Help Now</div>
+        <h2 class="section-title">Crisis & Urgent Support</h2>
+      </div>
+    </div>
+
+    <div class="card-grid reveal">
+
+      <a class="card featured" href="https://www.ehlers-danlos.com/find-a-healthcare-provider/" target="_blank" rel="noopener">
+        <div class="card-icon">🩺</div>
+        <div>
+          <div class="card-tag">Find a Specialist</div>
+          <h3>EDS Society Healthcare Provider Directory</h3>
+          <p>Search for EDS-knowledgeable physicians, physiotherapists, and mental health professionals in your country the most comprehensive directory available.</p>
+          <div class="card-arrow">Find a Provider →</div>
+        </div>
+      </a>
+
+      <a class="card" href="https://www.dysautonomiainternational.org/page/physicians" target="_blank" rel="noopener">
+        <div class="card-icon">💙</div>
+        <div class="card-tag">POTS Specialists</div>
+        <h3>POTS Physician Directory</h3>
+        <p>Dysautonomia International's list of physicians experienced in treating POTS and autonomic dysfunction.</p>
+        <div class="card-arrow">Find Doctor →</div>
+      </a>
+
+      <a class="card" href="https://tmsforacure.org/find-a-physician/" target="_blank" rel="noopener">
+        <div class="card-icon">🟡</div>
+        <div class="card-tag">MCAS Specialists</div>
+        <h3>MCAS Physician Finder</h3>
+        <p>The Mastocytosis Society's directory of physicians with mast cell disorder expertise.</p>
+        <div class="card-arrow">Find Specialist →</div>
+      </a>
+
+      <a class="card" href="https://www.samaritans.org/" target="_blank" rel="noopener">
+        <div class="card-icon">🫂</div>
+        <div class="card-tag">Mental Health</div>
+        <h3>Samaritans (UK & Ireland)</h3>
+        <p>Chronic illness can take a serious mental health toll. Samaritans provides free, 24/7 emotional support call 116 123 from anywhere in the UK.</p>
+        <div class="card-arrow">Get Support →</div>
+      </a>
+
+      <a class="card" href="https://www.crisistextline.org/" target="_blank" rel="noopener">
+        <div class="card-icon">💬</div>
+        <div class="card-tag">Crisis Text · US/UK/Canada</div>
+        <h3>Crisis Text Line</h3>
+        <p>Text HOME to 741741 (US), 85258 (UK), or 686868 (Canada) for free, confidential crisis support from trained counsellors.</p>
+        <div class="card-arrow">Learn More →</div>
+      </a>
+
+      <a class="card" href="https://www.chronicallyill.org/" target="_blank" rel="noopener">
+        <div class="card-icon">🌸</div>
+        <div class="card-tag">Mental Health & Chronic Illness</div>
+        <h3>The Chronically Ill</h3>
+        <p>Mental health resources specifically for people with chronic illness therapy directory, community support, and wellness tools.</p>
+        <div class="card-arrow">Visit →</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">The 11%</div>
+  <p>A community resource hub for women with hEDS, MCAS, and POTS.<br/>
+  Built with care. Not medical advice. Always seek qualified clinical support.<br/><br/>
+  Resources updated regularly · <a href="https://www.ehlers-danlos.com/" target="_blank" rel="noopener">EDS Society</a> · <a href="https://www.dysautonomiainternational.org/" target="_blank" rel="noopener">Dysautonomia International</a> · <a href="https://tmsforacure.org/" target="_blank" rel="noopener">TMS for a Cure</a></p>
+</footer>
+
+<script>
+  // Tab switching
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
